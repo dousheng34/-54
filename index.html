@@ -3,596 +3,478 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniReach AI — Автономные B2B Продажи нового поколения</title>
-  <meta name="description" content="Платформа автоматического парсинга, ИИ копирайтинга и отправки холодных предложений." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>OmniReach AI — Лимитированная ИИ-Платформа B2B Продаж</title>
+  <meta name="description" content="Элитная платформа автоматического парсинга, ИИ копирайтинга и отправки предложений в Алматы." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg-deep: #030612;
-      --bg-card: rgba(10, 16, 36, 0.6);
-      --bg-card-hover: rgba(16, 24, 52, 0.85);
-      --border: rgba(120, 80, 255, 0.12);
-      --border-glow: rgba(120, 80, 255, 0.45);
-      --accent: #8b5cf6;
-      --accent-bright: #a78bfa;
-      --accent2: #06b6d4;
-      --accent2-bright: #22d3ee;
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --text-muted: #475569;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --pending: #6366f1;
-      --radius-lg: 24px;
-      --radius: 16px;
-      --radius-sm: 10px;
-      --font-display: 'Outfit', sans-serif;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
-      --tr: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --bg: #0a0a0a;
+      --bg-2: #111111;
+      --gold: #c9a961;
+      --gold-soft: #d4b574;
+      --gold-dim: rgba(201, 169, 97, 0.2);
+      --text: #f5f5f0;
+      --text-dim: #8a8a85;
+      --text-mute: #5a5a55;
+      --line: rgba(201, 169, 97, 0.18);
+      --line-soft: rgba(255, 255, 255, 0.06);
+      --radius-sm: 1px;
+      --radius: 2px;
+      --font-serif: 'Cormorant Garamond', serif;
+      --font-sans: 'Inter', sans-serif;
+      --tr: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    html { scroll-behavior: smooth; }
+    body.light-theme {
+      --bg: #ffffff;
+      --bg-2: #fcfcf9;
+      --gold: #a8863f;
+      --gold-soft: #b8974d;
+      --gold-dim: rgba(168, 134, 63, 0.25);
+      --text: #1a1a1a;
+      --text-dim: #6a6a65;
+      --text-mute: #9a9a95;
+      --line: rgba(168, 134, 63, 0.2);
+      --line-soft: rgba(0, 0, 0, 0.07);
+    }
 
-    body {
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
       font-family: var(--font-sans);
-      background-color: var(--bg-deep);
-      color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.6;
-      font-size: 15px;
-      background-image:
-        radial-gradient(circle 900px at 0% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 100%),
-        radial-gradient(circle 800px at 100% 100%, rgba(6, 182, 212, 0.1) 0%, transparent 100%);
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    /* ── ANIMATED GRID BACKGROUND ── */
+    /* ── ELEGANT GLOW BACKGROUND ── */
     body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: -2; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse at top, rgba(201, 169, 97, 0.06), transparent 60%),
+        radial-gradient(ellipse at bottom, rgba(201, 169, 97, 0.03), transparent 65%);
     }
 
-    /* ── FLOATING GLOWING ORBS ── */
-    .orb {
-      position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: -1;
-      animation: orbFloat 12s ease-in-out infinite;
-    }
-    .orb-1 { width: 500px; height: 500px; background: rgba(139, 92, 246, 0.16); top: -200px; left: -100px; animation-delay: 0s; }
-    .orb-2 { width: 400px; height: 400px; background: rgba(6, 182, 212, 0.12); bottom: -100px; right: -100px; animation-delay: -6s; }
-    .orb-3 { width: 300px; height: 300px; background: rgba(168, 85, 247, 0.1); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -3s; }
+    a { color: inherit; text-decoration: none; }
 
-    @keyframes orbFloat {
-      0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
-      50% { transform: translateY(-40px) scale(1.08) rotate(180deg); }
-    }
-
-    /* ── APP SHELL ── */
-    #app {
-      display: flex; flex-direction: column; min-height: 100vh;
-    }
-
-    /* ── HEADER ── */
+    /* ============ HEADER ============ */
     header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 6%;
-      border-bottom: 1px solid var(--border);
-      background: rgba(3, 6, 18, 0.75);
-      backdrop-filter: blur(24px);
       position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: rgba(10, 10, 10, 0.72);
+      border-bottom: 1px solid var(--line-soft);
       transition: var(--tr);
     }
-    header.scrolled {
-      padding: 12px 6%;
-      border-color: rgba(120, 80, 255, 0.2);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    body.light-theme header {
+      background: rgba(255, 255, 255, 0.8);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 28px;
     }
     .logo {
-      display: flex; align-items: center; gap: 14px; text-decoration: none;
+      font-family: var(--font-serif); font-size: 24px;
+      letter-spacing: 5px; font-weight: 500; display: flex; align-items: center; gap: 8px;
     }
-    .logo-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-      position: relative; overflow: hidden;
-    }
-    .logo-icon::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transform: translateX(-100%); animation: sweep 3s infinite;
-    }
-    @keyframes sweep { 100% { transform: translateX(100%); } }
-    .logo-name {
-      font-family: var(--font-display);
-      font-size: 24px; font-weight: 800; letter-spacing: -0.5px;
-      background: linear-gradient(90deg, #ffffff, var(--accent-bright));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .logo-name span {
-      background: linear-gradient(90deg, var(--accent-bright), var(--accent2-bright));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .logo span { color: var(--gold); }
 
-    /* ── NAV MENUS ── */
-    nav {
-      display: flex; gap: 8px; background: rgba(255, 255, 255, 0.03);
-      padding: 5px; border-radius: 100px; border: 1px solid var(--border);
-    }
+    /* Navigation */
+    nav { display: flex; gap: 30px; }
     .nav-btn {
-      padding: 10px 22px; border-radius: 100px; border: none; background: transparent;
-      color: var(--text-secondary); font-family: var(--font-sans); font-size: 13.5px;
-      font-weight: 600; cursor: pointer; transition: var(--tr); display: flex; align-items: center; gap: 8px;
+      background: none; border: none; font-family: var(--font-sans);
+      font-size: 11px; letter-spacing: 2px; color: var(--text-dim);
+      text-transform: uppercase; cursor: pointer; transition: var(--tr);
+      padding: 6px 0; position: relative;
     }
-    .nav-btn:hover {
-      color: var(--text-primary); background: rgba(255,255,255,0.03);
+    .nav-btn:hover { color: var(--gold); }
+    .nav-btn::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+      background: var(--gold); transform: scaleX(0); transform-origin: right; transition: transform 0.3s ease;
     }
-    .nav-btn.active {
-      background: linear-gradient(135deg, var(--accent), rgba(139, 92, 246, 0.5));
-      color: #fff; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25);
-    }
+    .nav-btn.active { color: var(--gold); }
+    .nav-btn.active::after { transform: scaleX(1); transform-origin: left; }
 
-    .status-badge-wrap {
-      display: flex; align-items: center; gap: 12px;
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    
+    /* Theme Toggle Switch */
+    .theme-toggle {
+      width: 42px; height: 24px; border-radius: 12px;
+      background: var(--line-soft); border: 1px solid var(--line);
+      position: relative; cursor: pointer; padding: 0;
+      transition: background .3s, border-color .3s; flex-shrink: 0;
     }
-    .header-badge {
-      font-size: 11px; font-weight: 700; letter-spacing: 1px;
-      padding: 5px 12px; border-radius: 20px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      color: #10b981;
+    .theme-toggle::before {
+      content: ''; position: absolute; top: 2px; left: 2px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--gold);
+      transition: transform .3s ease, background .3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    body.light-theme .theme-toggle::before { transform: translateX(18px); }
+    .theme-toggle svg {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 11px; height: 11px; pointer-events: none;
+      color: var(--text-mute); transition: opacity .3s;
+    }
+    .theme-toggle .ico-moon { left: 5px; opacity: 1; }
+    .theme-toggle .ico-sun { right: 5px; opacity: 0.4; }
+    body.light-theme .theme-toggle .ico-moon { opacity: 0.4; }
+    body.light-theme .theme-toggle .ico-sun { opacity: 1; }
+
+    .status-badge {
+      font-size: 9px; letter-spacing: 2px; color: var(--gold);
+      text-transform: uppercase; padding: 6px 14px;
+      border: 1px solid var(--gold-dim); border-radius: 1px;
       display: flex; align-items: center; gap: 8px;
-      transition: var(--tr);
-    }
-    .header-badge.offline {
-      background: rgba(239, 68, 68, 0.1);
-      border-color: rgba(239, 68, 68, 0.25);
-      color: #ef4444;
     }
     .pulse-dot {
-      width: 8px; height: 8px; border-radius: 50%; background: #10b981;
-      animation: pulse 2s infinite;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
+      animation: pulse 2.5s infinite;
     }
-    .header-badge.offline .pulse-dot {
-      background: #ef4444; animation: none;
-    }
-    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0.4; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* ── TABS LAYOUT ── */
+    /* ============ CONTAINERS ============ */
     .tab-section {
-      display: none; animation: tabFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      padding: 40px 6%; flex: 1; max-width: 1400px; margin: 0 auto; width: 100%;
+      display: none; animation: tabFadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+      max-width: 1200px; margin: 0 auto; padding: 60px 28px 100px; position: relative; z-index: 1;
     }
     .tab-section.active { display: block; }
-    @keyframes tabFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes tabFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ── LANDING TAB ── */
+    /* ============ LANDING VIEW ============ */
     .hero {
-      text-align: center; max-width: 860px; margin: 60px auto 100px;
+      text-align: center; padding: 80px 0 100px; display: flex; flex-direction: column; align-items: center;
     }
-    .badge-hero {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: linear-gradient(90deg, rgba(139, 92, 246, 0.15), rgba(6, 182, 212, 0.15));
-      border: 1px solid rgba(139, 92, 246, 0.25);
-      padding: 6px 16px; border-radius: 100px; font-size: 13px; font-weight: 700;
-      color: var(--accent-bright); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.5px;
+    .hero-tag {
+      font-size: 11px; letter-spacing: 6px; color: var(--gold);
+      text-transform: uppercase; margin-bottom: 28px;
+    }
+    .hero-tag::before, .hero-tag::after {
+      content: ''; display: inline-block; width: 30px; height: 1px;
+      background: var(--gold-dim); vertical-align: middle; margin: 0 14px;
     }
     .hero h1 {
-      font-family: var(--font-display);
-      font-size: 64px; font-weight: 900; line-height: 1.1; letter-spacing: -2px;
-      background: linear-gradient(135deg, #fff 30%, #94a3b8 70%, var(--accent-bright) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 24px;
+      font-family: var(--font-serif); font-weight: 300;
+      font-size: clamp(40px, 7vw, 76px); line-height: 1.1;
+      letter-spacing: 2px; max-width: 900px; margin-bottom: 28px;
     }
-    .hero h1 em {
-      font-style: normal;
-      background: linear-gradient(90deg, var(--accent-bright), var(--accent2-bright));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    .hero h1 em { font-style: italic; color: var(--gold); font-weight: 400; }
+    .hero-lead {
+      font-size: 14.5px; line-height: 1.8; color: var(--text-dim);
+      max-width: 560px; margin-bottom: 48px; letter-spacing: .3px;
     }
-    .hero p {
-      font-size: 18px; color: var(--text-secondary); max-width: 660px; margin: 0 auto 40px;
-    }
-    .hero-ctas {
-      display: flex; justify-content: center; gap: 16px;
-    }
-    
-    /* ── BUTTONS ── */
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+    /* Buttons in Luxury Style */
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 15px 32px; border-radius: var(--radius-sm); font-family: var(--font-sans);
-      font-size: 14.5px; font-weight: 700; cursor: pointer; border: none; transition: var(--tr);
-      letter-spacing: 0.3px; position: relative; overflow: hidden; text-decoration: none;
+      display: inline-block; padding: 16px 36px; font-size: 10px;
+      letter-spacing: 3px; text-transform: uppercase; border-radius: var(--radius-sm);
+      transition: var(--tr); cursor: pointer; border: 1px solid transparent;
+      font-family: var(--font-sans); font-weight: 500; text-align: center;
     }
-    .btn-gradient {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; box-shadow: 0 4px 25px rgba(139, 92, 246, 0.45);
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { background: var(--gold-soft); letter-spacing: 4px; }
+    .btn-ghost { border-color: var(--gold-dim); color: var(--text); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-danger { border-color: rgba(224, 85, 85, 0.4); color: #f87171; }
+    .btn-danger:hover { border-color: #ef4444; background: rgba(239,68,68,0.05); }
+
+    /* Features in Luxury Style */
+    .sec-head { text-align: center; margin-bottom: 60px; }
+    .sec-label { font-size: 10px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; }
+    .sec-title { font-family: var(--font-serif); font-weight: 400; font-size: clamp(32px,4.5vw,44px); letter-spacing: 1px; margin-bottom: 18px; }
+    .sec-sub { font-size: 14px; color: var(--text-dim); max-width: 560px; margin: 0 auto; line-height: 1.75; }
+
+    .collection-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); margin-bottom: 80px;
     }
-    .btn-gradient:hover {
-      transform: translateY(-3px); box-shadow: 0 8px 35px rgba(139, 92, 246, 0.65);
+    .lux-card {
+      background: var(--bg); padding: 44px 36px; transition: var(--tr); position: relative;
     }
-    .btn-gradient:active { transform: translateY(0); }
-    .btn-outline {
-      background: rgba(255, 255, 255, 0.03); color: var(--text-primary);
-      border: 1px solid var(--border);
+    .lux-card:hover { background: var(--bg-2); }
+    .lux-card::after {
+      content: ''; position: absolute; left: 36px; right: 36px; bottom: 24px;
+      height: 1px; background: var(--gold-dim); transform: scaleX(0);
+      transform-origin: left; transition: transform .5s ease;
     }
-    .btn-outline:hover {
-      background: rgba(255,255,255,0.06); border-color: rgba(120, 80, 255, 0.3);
-      transform: translateY(-2px);
+    .lux-card:hover::after { transform: scaleX(1); }
+    .card-num { font-family: var(--font-serif); font-size: 14px; color: var(--gold); letter-spacing: 3px; margin-bottom: 24px; }
+    .card-name { font-family: var(--font-serif); font-size: 26px; font-weight: 400; margin-bottom: 14px; letter-spacing: .5px; }
+    .card-desc { font-size: 13.5px; color: var(--text-dim); line-height: 1.7; }
+
+    /* ============ PLAYGROUND TAB ============ */
+    .playground-wrapper {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; margin-top: 20px;
+    }
+    .lux-panel {
+      background: var(--bg-2); border: 1px solid var(--line-soft);
+      padding: 44px 36px; display: flex; flex-direction: column;
+      position: relative;
+    }
+    .lux-panel::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+    .lux-panel-header {
+      margin-bottom: 30px; padding-bottom: 18px; border-bottom: 1px solid var(--line-soft);
+    }
+    .lux-panel-title {
+      font-family: var(--font-serif); font-size: 24px; font-weight: 400; letter-spacing: 0.5px;
     }
 
-    /* ── FEATURES GRID ── */
-    .features-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-bottom: 100px;
-    }
-    .feat-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 36px 30px; transition: var(--tr);
-      backdrop-filter: blur(10px);
-    }
-    .feat-card:hover {
-      transform: translateY(-6px); border-color: var(--border-glow);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45), 0 0 25px rgba(139, 92, 246, 0.15);
-    }
-    .feat-icon {
-      width: 56px; height: 56px; border-radius: 12px;
-      background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px; margin-bottom: 24px; color: var(--accent-bright);
-      transition: var(--tr);
-    }
-    .feat-card:hover .feat-icon {
-      background: var(--accent); color: #fff; transform: scale(1.1) rotate(5deg);
-      box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
-    }
-    .feat-title {
-      font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 12px;
-    }
-    .feat-desc {
-      font-size: 14px; color: var(--text-secondary); line-height: 1.6;
-    }
-
-    /* ── PRICING SECTION ── */
-    .pricing-header {
-      text-align: center; margin-bottom: 50px;
-    }
-    .pricing-header h2 {
-      font-family: var(--font-display); font-size: 40px; font-weight: 800;
-      background: linear-gradient(135deg, #fff, var(--accent-bright));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-    }
-    .pricing-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1100px; margin: 0 auto 100px;
-    }
-    .price-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 40px; transition: var(--tr);
-      display: flex; flex-direction: column; position: relative;
-    }
-    .price-card.popular {
-      border-color: var(--accent); background: rgba(139, 92, 246, 0.05);
-      box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
-    }
-    .price-card.popular::before {
-      content: 'Рекомендуем'; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; padding: 4px 14px; border-radius: 100px; font-size: 11px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.5px;
-    }
-    .price-name { font-size: 18px; font-weight: 700; color: var(--text-secondary); margin-bottom: 16px; }
-    .price-card.popular .price-name { color: var(--accent-bright); }
-    .price-val { font-family: var(--font-display); font-size: 44px; font-weight: 800; margin-bottom: 24px; display: flex; align-items: baseline; }
-    .price-val span { font-size: 14px; color: var(--text-muted); font-weight: 500; margin-left: 6px; }
-    .price-features {
-      list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; flex: 1;
-    }
-    .price-features li {
-      font-size: 13.5px; color: var(--text-primary); display: flex; align-items: center; gap: 10px;
-    }
-    .price-features li::before {
-      content: '✓'; color: var(--success); font-weight: 900;
-    }
-    .price-card:hover {
-      transform: translateY(-8px); border-color: var(--border-glow);
-    }
-
-    /* ── PLAYGROUND TAB ── */
-    .playground-container {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
-    }
-    .panel {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 32px; backdrop-filter: blur(10px);
-      display: flex; flex-direction: column; height: 100%;
-    }
-    .panel-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
-    }
-    .panel-title {
-      font-family: var(--font-display); font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 10px;
-    }
-    
-    /* ── INPUTS & FORM CONTROLS ── */
-    .form-group { margin-bottom: 20px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    /* Form Controls */
+    .form-group { margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     label {
-      display:block; font-size: 12px; font-weight: 700; color: var(--text-secondary);
-      margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+      display: block; font-size: 9px; letter-spacing: 2px; color: var(--gold);
+      text-transform: uppercase; margin-bottom: 10px; font-weight: 600;
     }
     input[type="text"], input[type="email"], select, textarea {
-      width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 14px 18px; color: var(--text-primary);
-      font-family: var(--font-sans); font-size: 14px; outline: none; transition: var(--tr);
+      width: 100%; background: rgba(0,0,0,0.25); border: 1px solid var(--line);
+      color: var(--text); font-family: var(--font-sans); font-size: 13.5px;
+      padding: 15px 18px; outline: none; transition: var(--tr); letter-spacing: 0.5px;
+    }
+    body.light-theme input[type="text"], body.light-theme input[type="email"], body.light-theme select, body.light-theme textarea {
+      background: #ffffff;
     }
     input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
-      border-color: var(--accent); background: rgba(139, 92, 246, 0.05);
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+      border-color: var(--gold); background: rgba(0,0,0,0.4);
+      box-shadow: 0 0 15px rgba(201, 169, 97, 0.1);
     }
-    textarea { resize: vertical; min-height: 120px; }
+    body.light-theme input[type="text"]:focus, body.light-theme input[type="email"]:focus, body.light-theme select:focus, body.light-theme textarea:focus {
+      background: #ffffff;
+    }
+    textarea { min-height: 130px; resize: vertical; }
+
+    /* Scraper Loading Simulation styling */
+    .scan-container {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 40px 0; flex: 1; text-align: center;
+    }
+    .scan-box { width: 90px; height: 90px; position: relative; margin-bottom: 30px; }
+    .scan-corner { position: absolute; width: 18px; height: 18px; }
+    .scan-corner::before, .scan-corner::after { content: ''; position: absolute; background: var(--gold); }
+    .scan-corner::before { width: 100%; height: 1.5px; top: 0; left: 0; }
+    .scan-corner::after { width: 1.5px; height: 100%; top: 0; left: 0; }
+    .scan-corner.tr { top: 0; right: 0; transform: rotate(90deg); }
+    .scan-corner.bl { bottom: 0; left: 0; transform: rotate(-90deg); }
+    .scan-corner.br { bottom: 0; right: 0; transform: rotate(180deg); }
     
-    /* ── TERMINAL SIMULATOR ── */
-    .terminal {
-      background: #02040b; border: 1px solid rgba(255,255,255,0.06);
-      border-radius: var(--radius-sm); padding: 16px; font-family: monospace;
-      font-size: 13px; color: #34d399; min-height: 140px; max-height: 200px;
-      overflow-y: auto; display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px;
+    .scan-line {
+      position: absolute; left: 6px; right: 6px; height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-soft), var(--gold), transparent);
+      box-shadow: 0 0 10px rgba(201, 169, 97, 0.8);
+      animation: scan-anim 2s ease-in-out infinite; top: 6px;
     }
-    .terminal-line { display: flex; gap: 8px; }
-    .terminal-time { color: var(--text-muted); }
-    
-    /* ── OUTPUT WRAPPER ── */
-    .output-box {
-      flex: 1; display: flex; flex-direction: column; gap: 20px;
-    }
-    .pitch-output {
-      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 20px; position: relative;
-    }
-    .pitch-output-header {
-      font-size: 11px; font-weight: 700; color: var(--accent-bright);
-      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
-    }
-    .pitch-output-text {
-      font-size: 14px; white-space: pre-wrap; word-break: break-word; color: #f1f5f9;
+    @keyframes scan-anim {
+      0% { top: 6px; opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { top: calc(100% - 8px); opacity: 0; }
     }
 
-    /* ── DASHBOARD TAB ── */
-    .stats-row {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px;
+    .scan-pulse-ring {
+      position: absolute; inset: 0; border: 1px solid var(--gold-dim); border-radius: 2px;
+      animation: pulse-ring-anim 2.5s ease-out infinite;
     }
-    .stat-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 24px; transition: var(--tr);
-      position: relative; overflow: hidden;
-    }
-    .stat-card:hover {
-      transform: translateY(-4px); border-color: var(--border-glow);
-    }
-    .stat-val {
-      font-family: var(--font-display); font-size: 36px; font-weight: 800; margin-bottom: 4px;
-    }
-    .stat-val.purple { color: var(--accent-bright); }
-    .stat-val.cyan { color: var(--accent2-bright); }
-    .stat-val.green { color: #10b981; }
-    .stat-val.red { color: #ef4444; }
-    .stat-lbl { font-size: 13.5px; color: var(--text-secondary); font-weight: 600; }
-    .stat-progress {
-      height: 4px; background: rgba(255,255,255,0.05); border-radius: 100px;
-      margin-top: 10px; overflow: hidden;
-    }
-    .stat-progress-bar {
-      height: 100%; width: 0%; transition: width 0.8s ease;
+    @keyframes pulse-ring-anim {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.3); opacity: 0; }
     }
 
-    .dashboard-layout {
-      display: grid; grid-template-columns: 380px 1fr; gap: 24px;
+    .scan-step-list {
+      display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; text-align: left;
     }
-    .list-panel {
-      display: flex; flex-direction: column; gap: 20px;
+    .scan-step {
+      display: flex; align-items: center; gap: 14px; font-size: 11px; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--text-dim); transition: var(--tr); opacity: 0.35;
     }
-    .list-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); overflow: hidden; display: flex;
-      flex-direction: column; max-height: 600px;
+    .scan-step.active { opacity: 1; color: var(--text); }
+    .scan-step.done { opacity: 0.65; color: var(--gold); }
+    .scan-step-num {
+      width: 22px; height: 22px; border-radius: 50%; border: 1px solid currentColor;
+      display: flex; align-items: center; justify-content: center; font-size: 9px;
     }
-    .list-card-header {
-      padding: 20px 24px; border-bottom: 1px solid var(--border);
+    .scan-step.done .scan-step-num { background: var(--gold-dim); }
+
+    /* Output Section */
+    .output-wrapper { display: flex; flex-direction: column; gap: 24px; flex: 1; }
+    .pitch-output-box {
+      background: rgba(0,0,0,0.15); border: 1px solid var(--line-soft); padding: 24px; position: relative;
+    }
+    .pitch-output-lbl { font-size: 9px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
+    .pitch-output-val { font-size: 13.5px; line-height: 1.8; color: var(--text); white-space: pre-wrap; }
+
+    /* ============ DASHBOARD TAB ============ */
+    .lux-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--line-soft); border: 1px solid var(--line-soft); margin-bottom: 40px;
+    }
+    .lux-stat-card {
+      background: var(--bg); padding: 30px; text-align: center;
+    }
+    .stat-number { font-family: var(--font-serif); font-size: 42px; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 10px; }
+    .stat-lbl { font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; }
+
+    .dash-grid {
+      display: grid; grid-template-columns: 360px 1fr; gap: 30px;
+    }
+    .list-container {
+      display: flex; flex-direction: column; border: 1px solid var(--line-soft); background: var(--bg-2);
+      max-height: 600px;
+    }
+    .list-header {
+      padding: 20px 24px; border-bottom: 1px solid var(--line-soft);
       display: flex; justify-content: space-between; align-items: center;
     }
-    .list-scroll {
-      overflow-y: auto; flex: 1;
-    }
-    .lead-item {
-      padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.03);
-      display: flex; align-items: center; justify-content: space-between;
-      cursor: pointer; transition: var(--tr);
-    }
-    .lead-item:hover { background: rgba(255,255,255,0.02); }
-    .lead-item.active {
-      background: rgba(139, 92, 246, 0.08); border-left: 3px solid var(--accent);
-    }
-    .lead-meta {
-      display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; margin-right: 12px;
-    }
-    .lead-cname { font-size: 14.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .lead-url { font-size: 12px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .list-header-title { font-family: var(--font-serif); font-size: 20px; letter-spacing: 0.5px; }
     
-    /* ── BADGES ── */
-    .badge {
-      font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 100px;
-      text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px;
+    .list-scroll { overflow-y: auto; flex: 1; }
+    .list-item {
+      padding: 16px 24px; border-bottom: 1px solid var(--line-soft);
+      display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: var(--tr);
     }
-    .badge-PENDING { background: rgba(99,102,241,0.1); color: #818cf8; border: 1px solid rgba(99,102,241,0.2); }
-    .badge-SCRAPING { background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); }
-    .badge-PERSONALIZING { background: rgba(168,85,247,0.1); color: #c084fc; border: 1px solid rgba(168,85,247,0.2); }
-    .badge-PERSONALIZED { background: rgba(16,185,129,0.1); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
-    .badge-SENT { background: rgba(6,182,212,0.1); color: #22d3ee; border: 1px solid rgba(6,182,212,0.2); }
-    .badge-FAILED, .badge-SCRAPE_FAILED { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+    .list-item:hover { background: rgba(255,255,255,0.01); }
+    .list-item.active { background: var(--gold-dim); border-left: 2px solid var(--gold); }
+    
+    .item-meta { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; margin-right: 12px; }
+    .item-name { font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-url { font-size: 11px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .lead-actions {
-      display: flex; gap: 6px;
+    .badge {
+      font-size: 9px; letter-spacing: 1px; padding: 3px 8px; border-radius: 1px;
+      text-transform: uppercase; border: 1px solid transparent;
     }
+    .badge-PENDING { border-color: var(--text-mute); color: var(--text-dim); }
+    .badge-SCRAPING { border-color: var(--gold-dim); color: var(--gold); }
+    .badge-PERSONALIZING { border-color: var(--gold-dim); color: var(--gold-soft); }
+    .badge-PERSONALIZED { border-color: rgba(16, 185, 129, 0.3); color: #34d399; background: rgba(16, 185, 129, 0.05); }
+    .badge-SENT { border-color: rgba(6, 182, 212, 0.3); color: #22d3ee; background: rgba(6, 182, 212, 0.05); }
+    .badge-FAILED, .badge-SCRAPE_FAILED { border-color: rgba(239, 68, 68, 0.3); color: #f87171; background: rgba(239, 68, 68, 0.05); }
+
     .action-btn-sm {
-      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-      width: 32px; height: 32px; border-radius: 8px; display: flex;
-      align-items: center; justify-content: center; cursor: pointer; transition: var(--tr);
-      color: var(--text-secondary);
+      background: none; border: 1px solid var(--line-soft);
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: var(--tr); color: var(--text-dim); font-size: 12px;
     }
-    .action-btn-sm:hover {
-      background: rgba(255,255,255,0.06); color: var(--text-primary);
-    }
-    .action-btn-sm.danger:hover {
-      background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239,68,68,0.3);
-    }
+    .action-btn-sm:hover { border-color: var(--gold); color: var(--gold); }
+    .action-btn-sm.danger:hover { border-color: #ef4444; color: #ef4444; }
 
     .empty-box {
-      padding: 60px 20px; text-align: center; color: var(--text-muted);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+      padding: 60px 24px; text-align: center; color: var(--text-mute);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
     }
-    .empty-box-icon { font-size: 44px; opacity: 0.3; }
+    .empty-icon { font-size: 36px; opacity: 0.35; color: var(--gold); }
 
-    /* ── TOAST MESSAGES ── */
+    /* ============ TOAST NOTIFICATIONS ============ */
     .toast-container { position: fixed; bottom: 32px; right: 32px; z-index: 1000; display: flex; flex-direction: column; gap: 12px; }
     .toast {
-      background: rgba(10, 16, 36, 0.9); border: 1px solid var(--border);
-      padding: 16px 24px; border-radius: var(--radius-sm); backdrop-filter: blur(20px);
+      background: var(--bg-2); border: 1px solid var(--line);
+      padding: 16px 24px; backdrop-filter: blur(14px);
       box-shadow: 0 10px 40px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px;
-      font-size: 14px; font-weight: 600; min-width: 320px; animation: toastIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      font-size: 12.5px; font-weight: 500; min-width: 320px; letter-spacing: 0.5px;
+      animation: toastIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
     }
-    .toast.success { border-color: rgba(16,185,129,0.3); color: #34d399; }
-    .toast.error { border-color: rgba(239,68,68,0.3); color: #f87171; }
-    .toast.info { border-color: rgba(120,80,255,0.3); color: var(--accent-bright); }
-    @keyframes toastIn { from { opacity: 0; transform: translateY(20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .toast.success { color: var(--gold); }
+    .toast.error { color: #f87171; border-color: rgba(239, 68, 68, 0.25); }
+    .toast.info { color: var(--text); }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1100px) {
-      .features-grid, .pricing-grid, .playground-container, .dashboard-layout {
-        grid-template-columns: 1fr;
-      }
-      .stats-row { grid-template-columns: 1fr 1fr; }
-    }
   </style>
 </head>
 <body>
 
-  <!-- FLOATING BACKGROUND ELEMENTS -->
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-
+  <!-- APP SHELL -->
   <div id="app">
     <!-- HEADER -->
     <header id="header">
-      <a href="#" class="logo" onclick="switchTab('landing')">
-        <div class="logo-icon">🪐</div>
-        <div class="logo-name">Omni<span>Reach AI</span></div>
-      </a>
+      <div class="header-inner">
+        <a href="#" class="logo" onclick="switchTab('landing')">
+          UNIMAG <span>AI</span>
+        </a>
 
-      <nav>
-        <button class="nav-btn active" id="btn-landing" onclick="switchTab('landing')">⚡ Главная</button>
-        <button class="nav-btn" id="btn-playground" onclick="switchTab('playground')">🎮 Демо-Зона</button>
-        <button class="nav-btn" id="btn-dashboard" onclick="switchTab('dashboard')">📊 Панель Агента</button>
-        <button class="nav-btn" id="btn-prompts" onclick="switchTab('prompts')">🧠 Промпты</button>
-        <button class="nav-btn" id="btn-settings" onclick="switchTab('settings')">⚙️ Настройки</button>
-      </nav>
+        <nav>
+          <button class="nav-btn active" id="btn-landing" onclick="switchTab('landing')">Главная</button>
+          <button class="nav-btn" id="btn-playground" onclick="switchTab('playground')">Демо-Зона</button>
+          <button class="nav-btn" id="btn-dashboard" onclick="switchTab('dashboard')">Панель Агента</button>
+          <button class="nav-btn" id="btn-prompts" onclick="switchTab('prompts')">Промпты</button>
+          <button class="nav-btn" id="btn-settings" onclick="switchTab('settings')">Настройки</button>
+        </nav>
 
-      <div class="status-badge-wrap">
-        <div class="header-badge" id="server-status">
-          <div class="pulse-dot"></div>
-          <span id="server-status-text">ОНЛАЙН</span>
+        <div class="nav-right">
+          <!-- Light/Dark theme toggle -->
+          <button type="button" class="theme-toggle" aria-label="Переключить тему" onclick="toggleTheme()">
+            <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
+          </button>
+          <div class="status-badge" id="server-status">
+            <div class="pulse-dot"></div>
+            <span id="server-status-text">ONLINE</span>
+          </div>
         </div>
       </div>
     </header>
 
-    <!-- SECTION: LANDING PAGE -->
+    <!-- SECTION: LANDING TAB -->
     <section class="tab-section active" id="sec-landing">
       <div class="hero">
-        <div class="badge-hero">🤖 Llama-3.3-70b Автономный AI</div>
-        <h1>Увеличьте Лиды и Продажи с <em>ИИ-Агентами</em></h1>
-        <p>OmniReach AI полностью берет на себя поиск клиентов: скачивает сайт компании, считывает её ценность, пишет идеальное персонализированное предложение и отправляет на почту.</p>
-        <div class="hero-ctas">
-          <button class="btn btn-gradient" onclick="switchTab('playground')">🔥 Попробовать Демо</button>
-          <button class="btn btn-outline" onclick="switchTab('dashboard')">Панель Управления</button>
+        <div class="hero-tag">Limited AI Edition</div>
+        <h1>Искусство B2B продаж <em>в каждом</em> автоматическом письме</h1>
+        <p class="hero-lead">
+          UNIMAG AI — интеллектуальный элитный ассистент по развитию B2B-партнерств. 
+          Он автоматически считывает ценность сайтов, персонализирует коммерческие предложения и запускает рассылки.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="switchTab('playground')">Запустить демо-генерацию</button>
+          <button class="btn btn-ghost" onclick="switchTab('dashboard')">Панель управления</button>
         </div>
       </div>
 
-      <!-- FEATURES Grid -->
-      <div class="features-grid">
-        <div class="feat-card">
-          <div class="feat-icon">🎯</div>
-          <h3 class="feat-title">Веб-Парсинг</h3>
-          <p class="feat-desc">Автоматически очищает страницы компаний от кода, меню и мусора. Оставляет только чистое УТП и тексты.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">✍️</div>
-          <h3 class="feat-title">Гипер-Персонализация</h3>
-          <p class="feat-desc">ИИ анализирует факты о компании и пишет письмо так, будто ваш сейлз изучал их бизнес 2 часа.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">📬</div>
-          <h3 class="feat-title">Умная Отправка</h3>
-          <p class="feat-desc">Полная интеграция с SMTP и Telegram. Получайте отчеты в мессенджер в реальном времени при отправке.</p>
-        </div>
+      <div class="sec-head">
+        <div class="sec-label">Возможности</div>
+        <h2 class="sec-title">Элитные инструменты продаж</h2>
+        <p class="sec-sub">Каждый элемент разработан для идеального взаимодействия с клиентами.</p>
       </div>
 
-      <!-- PRICING Grid -->
-      <div class="pricing-header">
-        <h2>Тарифные планы</h2>
-        <p style="color:var(--text-secondary);">Выберите объем генерации предложений под ваш отдел продаж</p>
-      </div>
-      <div class="pricing-grid">
-        <div class="price-card">
-          <div class="price-name">Стартовый</div>
-          <div class="price-val">Кастомный <span>/ бесплатно</span></div>
-          <ul class="price-features">
-            <li>Тестирование ИИ-копирайтинга</li>
-            <li>До 10 лидов в базе данных</li>
-            <li>Локальный запуск парсинга</li>
-          </ul>
-          <button class="btn btn-outline" style="margin-top:auto;" onclick="switchTab('playground')">Начать тест</button>
+      <div class="collection-grid">
+        <div class="lux-card">
+          <div class="card-num">№ 0001</div>
+          <h3 class="card-name">Глубокий анализ</h3>
+          <p class="card-desc">Интеллектуальный парсер очищает сайты от лишней верстки, рекламного кода и мусора, выделяя только ключевые предложения бизнеса.</p>
         </div>
-        <div class="price-card popular">
-          <div class="price-name">Бизнес</div>
-          <div class="price-val">$499 <span>/ месяц</span></div>
-          <ul class="price-features">
-            <li>Генерация до 1,000 лидов в месяц</li>
-            <li>Полная автоматизация (APScheduler)</li>
-            <li>Telegram отчетность в реальном времени</li>
-            <li>SMTP интеграция для авто-отправки</li>
-          </ul>
-          <button class="btn btn-gradient" style="margin-top:auto;" onclick="switchTab('dashboard')">Запустить Агента</button>
+        <div class="lux-card">
+          <div class="card-num">№ 0002</div>
+          <h3 class="card-name">ИИ Копирайтинг</h3>
+          <p class="card-desc">Llama-3.3-70b адаптирует каждое предложение, учитывая сферу, язык и тональность бренда клиента.</p>
         </div>
-        <div class="price-card">
-          <div class="price-name">Агентство</div>
-          <div class="price-val">$1,299 <span>/ месяц</span></div>
-          <ul class="price-features">
-            <li>Безлимитная генерация ИИ писем</li>
-            <li>Мультиаккаунты и ротация доменов</li>
-            <li>Интеграция с Smartlead & Instantly</li>
-            <li>Приоритетный доступ к Llama-3.3-70b</li>
-          </ul>
-          <button class="btn btn-outline" style="margin-top:auto;" onclick="switchTab('settings')">Настроить сейчас</button>
+        <div class="lux-card">
+          <div class="card-num">№ 0003</div>
+          <h3 class="card-name">Автоматическая отправка</h3>
+          <p class="card-desc">Поддержка SMTP ротации писем с получением живых отчетов о статусах отправки прямо в ваш Telegram-канал.</p>
         </div>
       </div>
     </section>
 
     <!-- SECTION: PLAYGROUND (LIVE DEMO) -->
     <section class="tab-section" id="sec-playground">
-      <div class="playground-container">
-        <!-- Left Side: Simulator Config -->
-        <div class="panel">
-          <div class="panel-header">
-            <h3 class="panel-title">🧠 Параметры демо-генерации</h3>
+      <div class="playground-wrapper">
+        <!-- Configuration Panel -->
+        <div class="lux-panel">
+          <div class="lux-panel-header">
+            <h3 class="lux-panel-title">Параметры демо-генерации</h3>
           </div>
           <div class="form-group">
             <label>Сайт компании для анализа *</label>
@@ -602,11 +484,11 @@
             <div class="form-group">
               <label>Стиль письма</label>
               <select id="play-style">
-                <option value="creative" selected>Креативный (цепляющий)</option>
-                <option value="short">Ультра-короткий (без воды)</option>
+                <option value="creative" selected>Креативный</option>
+                <option value="short">Ультра-короткий</option>
                 <option value="formal">Официально-деловой</option>
-                <option value="friendly">Дружелюбный (партнерство)</option>
-                <option value="direct">ROI-ориентированный</option>
+                <option value="friendly">Дружелюбный</option>
+                <option value="direct">Прямой ценностный</option>
               </select>
             </div>
             <div class="form-group">
@@ -614,144 +496,159 @@
               <select id="play-lang">
                 <option value="auto" selected>Автоопределение</option>
                 <option value="russian">Русский</option>
-                <option value="kazakh">Казахский (Қазақша)</option>
-                <option value="english">Английский (English)</option>
+                <option value="kazakh">Казахский</option>
+                <option value="english">Английский</option>
               </select>
             </div>
           </div>
-          <button class="btn btn-gradient" id="btn-play-run" onclick="runPlayground()">
-            🚀 Сгенерировать Письмо прямо сейчас
+          <button class="btn btn-primary" id="btn-play-run" onclick="runPlayground()" style="margin-top: 10px;">
+            Начать генерацию
           </button>
           
-          <div style="margin-top: 24px;">
-            <label>Лог работы Агента (live)</label>
-            <div class="terminal" id="play-terminal">
-              <div class="terminal-line"><span class="terminal-time">[00:00]</span> Готов к запуску. Введите URL.</div>
+          <!-- Animated Scanning Indicator -->
+          <div id="play-scanning-wrapper" style="display:none; margin-top:30px;">
+            <div class="scan-container">
+              <div class="scan-box">
+                <div class="scan-pulse-ring"></div>
+                <div class="scan-frame-corner tl"></div>
+                <div class="scan-frame-corner tr"></div>
+                <div class="scan-frame-corner bl"></div>
+                <div class="scan-frame-corner br"></div>
+                <div class="scan-line"></div>
+              </div>
+              <div class="scan-step-list">
+                <div class="scan-step" id="scan-s1">
+                  <div class="scan-step-num">1</div>
+                  <div>Инициализация парсера</div>
+                </div>
+                <div class="scan-step" id="scan-s2">
+                  <div class="scan-step-num">2</div>
+                  <div>Считывание контента сайта</div>
+                </div>
+                <div class="scan-step" id="scan-s3">
+                  <div class="scan-step-num">3</div>
+                  <div>Запуск Llama-3.3-70b</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Right Side: Live Output -->
-        <div class="panel">
-          <div class="panel-header">
-            <h3 class="panel-title">📩 Результат работы ИИ</h3>
+        <!-- Result Panel -->
+        <div class="lux-panel">
+          <div class="lux-panel-header">
+            <h3 class="lux-panel-title">Сгенерированное предложение</h3>
           </div>
-          <div class="output-box" id="play-output-empty">
-            <div class="empty-box">
-              <div class="empty-box-icon">🎯</div>
-              <p>Нажмите на кнопку генерации слева, чтобы запустить ИИ-агента и увидеть готовое письмо здесь.</p>
+          <div class="output-wrapper" id="play-output-empty">
+            <div class="empty-box" style="flex:1;">
+              <div class="empty-icon">✧</div>
+              <p>Нажмите кнопку генерации слева, чтобы запустить ИИ-агента.</p>
             </div>
           </div>
-          <div class="output-box" id="play-output-content" style="display:none;">
-            <div class="pitch-output">
-              <div class="pitch-output-header">Тема Письма</div>
-              <div class="pitch-output-text" id="play-res-subject" style="font-weight: 700; font-size: 16px;"></div>
+          <div class="output-wrapper" id="play-output-content" style="display:none;">
+            <div class="pitch-output-box">
+              <div class="pitch-output-lbl">📩 Тема</div>
+              <div class="pitch-output-val" id="play-res-subject" style="font-family: var(--font-serif); font-size:18px; font-weight:500;"></div>
             </div>
-            <div class="pitch-output" style="flex:1;">
-              <div class="pitch-output-header">Текст Письма</div>
-              <div class="pitch-output-text" id="play-res-body"></div>
+            <div class="pitch-output-box" style="flex:1;">
+              <div class="pitch-output-lbl">💬 Письмо</div>
+              <div class="pitch-output-val" id="play-res-body"></div>
             </div>
-            <div style="display:flex; gap:12px;">
-              <button class="btn btn-outline" style="flex:1;" onclick="copyPlaygroundText()">📋 Скопировать</button>
-              <button class="btn btn-gradient" style="flex:1;" onclick="savePlaygroundLead()">💾 Сохранить в базу</button>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+              <button class="btn btn-ghost" onclick="copyPlaygroundText()">Скопировать</button>
+              <button class="btn btn-primary" onclick="savePlaygroundLead()">Сохранить лид</button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION: AGENT CONTROL CENTER (DASHBOARD) -->
+    <!-- SECTION: DASHBOARD (LEAD TRACKER) -->
     <section class="tab-section" id="sec-dashboard">
-      <!-- Overview stats -->
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-val purple" id="stat-total">0</div>
-          <div class="stat-lbl">Всего Лидов</div>
-          <div class="stat-progress"><div class="stat-progress-bar" id="bar-total" style="background:var(--accent);"></div></div>
+      <!-- Luxury stats row -->
+      <div class="lux-stats">
+        <div class="lux-stat-card">
+          <div class="stat-number" id="stat-total">0</div>
+          <div class="stat-lbl">Всего лидов</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-val green" id="stat-done">0</div>
-          <div class="stat-lbl">Готово предложений</div>
-          <div class="stat-progress"><div class="stat-progress-bar" id="bar-done" style="background:#10b981;"></div></div>
+        <div class="lux-stat-card">
+          <div class="stat-number" id="stat-done">0</div>
+          <div class="stat-lbl">Готово писем</div>
         </div>
-        <div class="stat-card">
-          <div class="stat-val cyan" id="stat-sent">0</div>
+        <div class="lux-stat-card">
+          <div class="stat-number" id="stat-sent">0</div>
           <div class="stat-lbl">Отправлено</div>
-          <div class="stat-progress"><div class="stat-progress-bar" id="bar-sent" style="background:#06b6d4;"></div></div>
         </div>
-        <div class="stat-card">
-          <div class="stat-val red" id="stat-failed">0</div>
+        <div class="lux-stat-card">
+          <div class="stat-number" id="stat-failed">0</div>
           <div class="stat-lbl">Ошибки</div>
-          <div class="stat-progress"><div class="stat-progress-bar" id="bar-failed" style="background:#ef4444;"></div></div>
         </div>
       </div>
 
-      <!-- Add Lead inline card -->
-      <div class="panel" style="margin-bottom: 24px;">
-        <div class="panel-header">
-          <h3 class="panel-title">➕ Добавить компанию в очередь рассылки</h3>
+      <!-- Add lead inline panel -->
+      <div class="lux-panel" style="margin-bottom: 30px;">
+        <div class="lux-panel-header">
+          <h3 class="lux-panel-title" style="font-size: 20px;">Добавить компанию в список рассылки</h3>
         </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:16px; align-items:end;">
+        <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr auto; gap:20px; align-items:end;">
           <div class="form-group" style="margin-bottom:0">
             <label>Сайт компании *</label>
             <input type="text" id="dash-website" placeholder="https://kaspi.kz" />
           </div>
           <div class="form-group" style="margin-bottom:0">
-            <label>Название</label>
+            <label>Название компании</label>
             <input type="text" id="dash-name" placeholder="Kaspi Bank" />
           </div>
           <div class="form-group" style="margin-bottom:0">
             <label>Email контакта</label>
-            <input type="email" id="dash-email" placeholder="ceo@kaspi.kz" />
+            <input type="email" id="dash-email" placeholder="info@kaspi.kz" />
           </div>
-          <button class="btn btn-gradient" id="dash-add-btn" onclick="addDashboardLead()" style="padding:14px 24px;">Добавить лид</button>
+          <button class="btn btn-primary" id="dash-add-btn" onclick="addDashboardLead()" style="padding:15px 30px;">Добавить</button>
         </div>
       </div>
 
-      <!-- Dashboard Layout -->
-      <div class="dashboard-layout">
-        <!-- List side -->
-        <div class="list-panel">
-          <div class="list-card">
-            <div class="list-card-header">
-              <h3 class="panel-title">📋 Очередь</h3>
-              <div style="display:flex; gap:6px;">
-                <button class="action-btn-sm" onclick="loadDashboardLeads()" title="Обновить">🔄</button>
-                <button class="action-btn-sm" onclick="triggerOutreach()" title="Запустить фоновый процесс" style="color:#10b981;">⚡</button>
-              </div>
+      <!-- Dashboard grid -->
+      <div class="dash-grid">
+        <!-- List container -->
+        <div class="list-container">
+          <div class="list-header">
+            <h3 class="list-header-title">Список лидов</h3>
+            <div style="display:flex; gap:10px;">
+              <button class="action-btn-sm" onclick="loadDashboardLeads()" title="Обновить">🔄</button>
+              <button class="action-btn-sm" onclick="triggerOutreach()" title="Запустить фоновый процесс" style="color:var(--gold);">⚡</button>
             </div>
-            <div class="list-scroll" id="dash-leads-list">
-              <div class="empty-box">
-                <div class="empty-box-icon">🤖</div>
-                <p>Загрузка очереди лидов...</p>
-              </div>
+          </div>
+          <div class="list-scroll" id="dash-leads-list">
+            <div class="empty-box">
+              <div class="empty-icon">✧</div>
+              <p>Загрузка очереди лидов...</p>
             </div>
           </div>
         </div>
 
-        <!-- Detail side -->
-        <div class="panel" id="dash-detail-panel">
-          <div class="panel-header">
-            <h3 class="panel-title">✍️ Сгенерированное письмо</h3>
-            <span id="dash-detail-company" style="font-size:13px; color:var(--text-secondary);"></span>
+        <!-- Detail panel -->
+        <div class="lux-panel" id="dash-detail-panel">
+          <div class="lux-panel-header">
+            <h3 class="lux-panel-title">Сгенерированное письмо</h3>
+            <span id="dash-detail-company" style="font-size:12px; color:var(--text-dim); margin-top:6px; display:block;"></span>
           </div>
           <div id="dash-detail-empty" class="empty-box" style="flex:1;">
-            <div class="empty-box-icon">🎯</div>
-            <p>Выберите лид из списка слева для просмотра деталей.</p>
+            <div class="empty-icon">✧</div>
+            <p>Выберите лид из списка для просмотра деталей.</p>
           </div>
-          <div id="dash-detail-content" style="display:none; flex:1; flex-direction:column; gap:20px;">
-            <div class="pitch-output">
-              <div class="pitch-output-header">📩 Тема</div>
-              <div class="pitch-output-text" id="dash-detail-subject" style="font-weight:700;"></div>
+          <div id="dash-detail-content" style="display:none; flex:1; flex-direction:column; gap:24px;">
+            <div class="pitch-output-box">
+              <div class="pitch-output-lbl">📩 Тема письма</div>
+              <div class="pitch-output-val" id="dash-detail-subject" style="font-family: var(--font-serif); font-size:18px; font-weight:500;"></div>
             </div>
-            <div class="pitch-output" style="flex:1;">
-              <div class="pitch-output-header">💬 Текст</div>
-              <div class="pitch-output-text" id="dash-detail-body"></div>
+            <div class="pitch-output-box" style="flex:1;">
+              <div class="pitch-output-lbl">💬 Письмо</div>
+              <div class="pitch-output-val" id="dash-detail-body"></div>
             </div>
-            <div style="display:flex; gap:12px;">
-              <button class="btn btn-outline" style="flex:1;" onclick="copyDetailText()">📋 Копировать</button>
-              <button class="btn btn-outline danger" style="flex:0.5;" onclick="resetDetailLead()">🔄 Сбросить</button>
-              <button class="btn btn-gradient" style="flex:1;" onclick="sendDetailMock()">📤 Отправить</button>
+            <div style="display:grid; grid-template-columns: 1.5fr 1fr 1.5fr; gap:16px;">
+              <button class="btn btn-ghost" onclick="copyDetailText()">Скопировать</button>
+              <button class="btn btn-danger" onclick="resetDetailLead()">Сбросить</button>
+              <button class="btn btn-primary" onclick="sendDetailMock()">Отправить</button>
             </div>
           </div>
         </div>
@@ -760,59 +657,59 @@
 
     <!-- SECTION: PROMPT STUDIO -->
     <section class="tab-section" id="sec-prompts">
-      <div class="panel">
-        <div class="panel-header">
-          <h3 class="panel-title">🧠 Студия Системных Промптов</h3>
+      <div class="lux-panel">
+        <div class="lux-panel-header">
+          <h3 class="lux-panel-title">Студия системных промптов</h3>
         </div>
         <div class="form-group">
-          <label>Шаблон холодного коммерческого предложения (System Prompt)</label>
-          <textarea id="prompt-content" style="height:320px; font-family:monospace; line-height:1.5;"></textarea>
+          <label>Промпт генерации холодного предложения</label>
+          <textarea id="prompt-content" style="height:320px; font-family:monospace; font-size:13px; line-height:1.6;"></textarea>
         </div>
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <p style="font-size:12px; color:var(--text-muted);">Используйте тег `{website_content}` для вставки спарсенного контента.</p>
-          <button class="btn btn-gradient" onclick="savePromptSettings()">Сохранить настройки промпта</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
+          <p style="font-size:11px; color:var(--text-dim);">Используйте переменную `{website_content}` для подстановки спарсенного контента.</p>
+          <button class="btn btn-primary" onclick="savePromptSettings()">Сохранить настройки промпта</button>
         </div>
       </div>
     </section>
 
     <!-- SECTION: SETTINGS -->
     <section class="tab-section" id="sec-settings">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:36px;">
         <!-- SMTP Config -->
-        <div class="panel">
-          <div class="panel-header">
-            <h3 class="panel-title">📧 Настройка SMTP рассылки</h3>
+        <div class="lux-panel">
+          <div class="lux-panel-header">
+            <h3 class="lux-panel-title">Настройки SMTP рассылки</h3>
           </div>
           <div class="form-group">
-            <label>Режим отправки</label>
+            <label>Режим работы рассылки</label>
             <select id="settings-outreach-mode">
-              <option value="mock">Эмуляция (вывод в лог)</option>
-              <option value="live">Live SMTP (реальная отправка)</option>
+              <option value="mock">Эмуляция отправки (в лог)</option>
+              <option value="live">Реальная отправка (SMTP Live)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>SMTP Host</label>
+            <label>SMTP Сервер (Host)</label>
             <input type="text" id="settings-smtp-host" placeholder="smtp.gmail.com" />
           </div>
           <div class="form-group">
-            <label>SMTP Port</label>
+            <label>SMTP Порт</label>
             <input type="text" id="settings-smtp-port" placeholder="465" />
           </div>
           <div class="form-group">
-            <label>SMTP User (Email)</label>
-            <input type="text" id="settings-smtp-user" placeholder="my-domain@gmail.com" />
+            <label>SMTP Email (User)</label>
+            <input type="text" id="settings-smtp-user" placeholder="office@company.kz" />
           </div>
           <div class="form-group">
-            <label>SMTP Password / App Password</label>
-            <input type="password" style="width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 18px; color:var(--text-primary);" id="settings-smtp-pass" placeholder="••••••••" />
+            <label>SMTP Пароль приложения</label>
+            <input type="password" style="width:100%; background:rgba(0,0,0,0.25); border:1px solid var(--line); color:var(--text); padding:15px 18px; outline:none;" id="settings-smtp-pass" placeholder="••••••••" />
           </div>
-          <button class="btn btn-gradient" onclick="saveSmtpSettings()">Сохранить параметры SMTP</button>
+          <button class="btn btn-primary" onclick="saveSmtpSettings()">Сохранить SMTP</button>
         </div>
 
         <!-- Telegram Config -->
-        <div class="panel">
-          <div class="panel-header">
-            <h3 class="panel-title">💬 Интеграция с Telegram</h3>
+        <div class="lux-panel">
+          <div class="lux-panel-header">
+            <h3 class="lux-panel-title">Интеграция с Telegram</h3>
           </div>
           <div class="form-group">
             <label>Telegram Bot Token</label>
@@ -822,15 +719,12 @@
             <label>Telegram Chat ID</label>
             <input type="text" id="settings-tg-chatid" placeholder="105928151" />
           </div>
-          <button class="btn btn-gradient" onclick="saveTgSettings()">Сохранить настройки Telegram</button>
+          <button class="btn btn-primary" onclick="saveTgSettings()" style="margin-bottom: 30px;">Сохранить Telegram</button>
 
-          <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border);">
-            <h4 style="font-size:14px; margin-bottom:8px;">Инструкция по Telegram:</h4>
-            <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
-              1. Создайте бота через <a href="https://t.me/BotFather" target="_blank" style="color:var(--accent-bright);">@BotFather</a> в Telegram и скопируйте его токен.<br>
-              2. Напишите боту `/start`.<br>
-              3. Узнайте свой Chat ID через <a href="https://t.me/userinfobot" target="_blank" style="color:var(--accent-bright);">@userinfobot</a>.<br>
-              4. Заполните поля выше. Вы будете получать уведомления при каждой авто-персонализации лидов!
+          <div style="padding-top: 24px; border-top: 1px solid var(--line-soft);">
+            <h4 style="font-family:var(--font-serif); font-size:18px; color:var(--gold); margin-bottom:12px;">Уведомления в реальном времени</h4>
+            <p style="font-size:12.5px; color:var(--text-dim); line-height:1.65;">
+              Каждый раз, когда агент завершает парсинг и генерацию предложения для компании из очереди, вы будете мгновенно получать полную копию письма в ваш Telegram.
             </p>
           </div>
         </div>
@@ -847,15 +741,17 @@
     let allLeads = [];
     let selectedLead = null;
 
-    // Scroll Header effect
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('header');
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
+    // ── THEME SWITCHER ──
+    function toggleTheme() {
+      document.body.classList.toggle('light-theme');
+      const isLight = document.body.classList.contains('light-theme');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      showToast(isLight ? 'Включена светлая тема' : 'Включена темная тема', 'info');
+    }
+    // Restore theme preference
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light-theme');
+    }
 
     // ── TOAST NOTIFICATIONS ──
     function showToast(msg, type = 'info') {
@@ -863,18 +759,18 @@
       const el = document.createElement('div');
       el.className = `toast ${type}`;
       
-      const icons = { success: '✅', error: '❌', info: '💡' };
-      el.innerHTML = `<span>${icons[type] || 'ℹ️'}</span> ${msg}`;
+      const icons = { success: '✧', error: '✕', info: '✧' };
+      el.innerHTML = `<span>${icons[type] || '✧'}</span> ${msg}`;
       
       container.appendChild(el);
       setTimeout(() => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(-10px) scale(0.9)';
-        setTimeout(() => el.remove(), 300);
+        el.style.transform = 'translateY(-10px)';
+        setTimeout(() => el.remove(), 400);
       }, 4000);
     }
 
-    // ── NAVIGATION / TAB SWITCHING ──
+    // ── TAB NAVIGATOR ──
     function switchTab(tabId) {
       document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -887,30 +783,27 @@
       }
     }
 
-    // ── CONNECTIVITY STATUS ──
+    // ── SERVER STATUS ──
     async function checkServerStatus() {
       try {
         const r = await fetch(API + '/');
         if (r.ok) {
-          const status = document.getElementById('server-status');
-          status.classList.remove('offline');
-          document.getElementById('server-status-text').textContent = 'ОНЛАЙН';
+          document.getElementById('server-status-text').textContent = 'ONLINE';
+          document.getElementById('server-status').style.borderColor = 'var(--gold-dim)';
         }
       } catch (e) {
-        const status = document.getElementById('server-status');
-        status.classList.add('offline');
-        document.getElementById('server-status-text').textContent = 'ОФЛАЙН';
+        document.getElementById('server-status-text').textContent = 'OFFLINE';
+        document.getElementById('server-status').style.borderColor = 'rgba(239, 68, 68, 0.3)';
       }
     }
-    setInterval(checkServerStatus, 10000);
+    setInterval(checkServerStatus, 12000);
     checkServerStatus();
 
     // ── PLAYGROUND (LIVE DEMO) ──
-    function logTerminal(text) {
-      const term = document.getElementById('play-terminal');
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      term.innerHTML += `<div class="terminal-line"><span class="terminal-time">[${time}]</span> ${text}</div>`;
-      term.scrollTop = term.scrollHeight;
+    function updateScanStep(stepId, state) {
+      const el = document.getElementById(`scan-${stepId}`);
+      if (!el) return;
+      el.className = `scan-step ${state}`; // active, done, or default
     }
 
     async function runPlayground() {
@@ -919,51 +812,63 @@
       const language = document.getElementById('play-lang').value;
       
       if (!website) {
-        showToast('Пожалуйста, введите URL сайта', 'error');
+        showToast('Пожалуйста, укажите сайт для генерации', 'error');
         return;
       }
 
-      document.getElementById('btn-play-run').disabled = true;
-      document.getElementById('btn-play-run').innerHTML = '⏳ Обработка ИИ...';
-      
+      const btn = document.getElementById('btn-play-run');
+      btn.disabled = true;
+      btn.textContent = 'Обработка...';
+
       document.getElementById('play-output-empty').style.display = 'none';
       document.getElementById('play-output-content').style.display = 'none';
-      
-      document.getElementById('play-terminal').innerHTML = '';
-      logTerminal(`Запуск сканирования для: ${website}...`);
+      document.getElementById('play-scanning-wrapper').style.display = 'block';
+
+      // Scan steps sequence animation
+      updateScanStep('s1', 'active');
+      updateScanStep('s2', '');
+      updateScanStep('s3', '');
+
+      setTimeout(() => updateScanStep('s1', 'done'), 1500);
+      setTimeout(() => updateScanStep('s2', 'active'), 1600);
 
       try {
-        logTerminal(`[Шаг 1] Скачивание landing page контента...`);
-        // We will call the playground endpoint we created in backend
         const res = await fetch(`${API}/api/playground/test-pitch`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ website, style, language })
         });
         
+        setTimeout(() => updateScanStep('s2', 'done'), 3000);
+        setTimeout(() => updateScanStep('s3', 'active'), 3100);
+
         if (!res.ok) {
           const errorData = await res.json();
-          throw new Error(errorData.detail || 'Не удалось сгенерировать.');
+          throw new Error(errorData.detail || 'Ошибка генерации.');
         }
 
         const data = await res.json();
-        
-        logTerminal(`[Шаг 2] Извлечено ${data.scraped_length} символов. Анализ ключевых ценностей...`);
-        logTerminal(`[Шаг 3] Генерация холодного предложения через Llama-3.3-70b...`);
-        logTerminal(`[Шаг 4] Ответ ИИ успешно получен.`);
 
-        document.getElementById('play-res-subject').textContent = data.subject || '(Тема не указана)';
-        document.getElementById('play-res-body').textContent = data.body;
-        
-        document.getElementById('play-output-content').style.display = 'block';
-        showToast('Генерация успешно завершена!', 'success');
+        setTimeout(() => {
+          updateScanStep('s3', 'done');
+          document.getElementById('play-scanning-wrapper').style.display = 'none';
+          document.getElementById('play-res-subject').textContent = data.subject || '(Без темы)';
+          document.getElementById('play-res-body').textContent = data.body;
+          document.getElementById('play-output-content').style.display = 'flex';
+          showToast('Письмо успешно создано!', 'success');
+        }, 4500);
+
       } catch (e) {
-        logTerminal(`⚠️ Ошибка: ${e.message}`);
-        document.getElementById('play-output-empty').style.display = 'flex';
-        showToast(`Ошибка: ${e.message}`, 'error');
+        setTimeout(() => {
+          document.getElementById('play-scanning-wrapper').style.display = 'none';
+          document.getElementById('play-output-empty').style.display = 'flex';
+          showToast(`Ошибка: ${e.message}`, 'error');
+        }, 2000);
       } finally {
-        document.getElementById('btn-play-run').disabled = false;
-        document.getElementById('btn-play-run').innerHTML = '🚀 Сгенерировать Письмо прямо сейчас';
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = 'Начать генерацию';
+        }, 4500);
       }
     }
 
@@ -971,17 +876,13 @@
       const sub = document.getElementById('play-res-subject').textContent;
       const body = document.getElementById('play-res-body').textContent;
       navigator.clipboard.writeText(`Тема: ${sub}\n\n${body}`).then(() => {
-        showToast('Текст скопирован в буфер обмена!', 'success');
+        showToast('Текст скопирован!', 'success');
       });
     }
 
     async function savePlaygroundLead() {
       const website = document.getElementById('play-website').value.trim();
-      const subject = document.getElementById('play-res-subject').textContent;
-      const body = document.getElementById('play-res-body').textContent;
-
       try {
-        // Post as already personalized
         const res = await fetch(`${API}/api/leads`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1012,8 +913,8 @@
       } catch (e) {
         document.getElementById('dash-leads-list').innerHTML = `
           <div class="empty-box">
-            <div class="empty-box-icon">⚠️</div>
-            <p>Не удалось получить список лидов с сервера.</p>
+            <div class="empty-icon">✕</div>
+            <p>Не удалось получить данные с сервера.</p>
           </div>`;
       }
     }
@@ -1028,18 +929,6 @@
       document.getElementById('stat-done').textContent = done;
       document.getElementById('stat-sent').textContent = sent;
       document.getElementById('stat-failed').textContent = failed;
-
-      if (total > 0) {
-        document.getElementById('bar-total').style.width = '100%';
-        document.getElementById('bar-done').style.width = `${Math.round(done / total * 100)}%`;
-        document.getElementById('bar-sent').style.width = `${Math.round(sent / total * 100)}%`;
-        document.getElementById('bar-failed').style.width = `${Math.round(failed / total * 100)}%`;
-      } else {
-        document.getElementById('bar-total').style.width = '0%';
-        document.getElementById('bar-done').style.width = '0%';
-        document.getElementById('bar-sent').style.width = '0%';
-        document.getElementById('bar-failed').style.width = '0%';
-      }
     }
 
     function renderDashboardLeads() {
@@ -1047,22 +936,22 @@
       if (allLeads.length === 0) {
         container.innerHTML = `
           <div class="empty-box">
-            <div class="empty-box-icon">📋</div>
-            <p>Очередь пуста. Заполните форму выше.</p>
+            <div class="empty-icon">✧</div>
+            <p>Список пуст.</p>
           </div>`;
         return;
       }
 
       container.innerHTML = allLeads.map(lead => `
-        <div class="lead-item ${selectedLead && selectedLead.id === lead.id ? 'active' : ''}" onclick="selectDashboardLead(${lead.id})">
-          <div class="lead-meta">
-            <span class="lead-cname">${lead.company_name || lead.website}</span>
-            <span class="lead-url">${lead.website}</span>
+        <div class="list-item ${selectedLead && selectedLead.id === lead.id ? 'active' : ''}" onclick="selectDashboardLead(${lead.id})">
+          <div class="item-meta">
+            <span class="item-name">${lead.company_name || lead.website}</span>
+            <span class="item-url">${lead.website}</span>
           </div>
           <div style="display:flex; align-items:center; gap:12px;">
             <span class="badge badge-${lead.status}">${lead.status}</span>
             <div class="lead-actions" onclick="event.stopPropagation()">
-              <button class="action-btn-sm danger" onclick="deleteDashboardLead(${lead.id})" title="Удалить">🗑️</button>
+              <button class="action-btn-sm danger" onclick="deleteDashboardLead(${lead.id})" title="Удалить">✕</button>
             </div>
           </div>
         </div>
@@ -1094,13 +983,13 @@
         detailContent.style.display = 'none';
         
         let statusMsg = 'Ожидает генерации...';
-        if (selectedLead.status === 'SCRAPING') statusMsg = '🔍 Парсинг сайта...';
-        if (selectedLead.status === 'PERSONALIZING') statusMsg = '🤖 ИИ пишет письмо...';
+        if (selectedLead.status === 'SCRAPING') statusMsg = 'Парсинг сайта компании...';
+        if (selectedLead.status === 'PERSONALIZING') statusMsg = 'Llama-3.3-70b пишет предложение...';
         if (selectedLead.status === 'FAILED' || selectedLead.status === 'SCRAPE_FAILED') {
-          statusMsg = `❌ Ошибка: ${selectedLead.error_message || 'Неизвестная ошибка'}`;
+          statusMsg = `Ошибка: ${selectedLead.error_message || 'Неизвестная ошибка'}`;
         }
         detailEmpty.innerHTML = `
-          <div class="empty-box-icon">⏳</div>
+          <div class="empty-icon">⏳</div>
           <p>${statusMsg}</p>
         `;
       }
@@ -1112,7 +1001,7 @@
       const contact_email = document.getElementById('dash-email').value.trim();
 
       if (!website) {
-        showToast('Пожалуйста, введите сайт компании', 'error');
+        showToast('Пожалуйста, укажите сайт компании', 'error');
         return;
       }
 
@@ -1128,29 +1017,29 @@
         });
 
         if (res.ok) {
-          showToast('Компания добавлена в очередь!', 'success');
+          showToast('Лид добавлен в базу!', 'success');
           document.getElementById('dash-website').value = '';
           document.getElementById('dash-name').value = '';
           document.getElementById('dash-email').value = '';
           loadDashboardLeads();
         } else {
           const err = await res.json();
-          showToast(err.detail || 'Не удалось добавить', 'error');
+          showToast(err.detail || 'Ошибка добавления', 'error');
         }
       } catch (e) {
-        showToast('Ошибка сети', 'error');
+        showToast('Ошибка подключения', 'error');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Добавить лид';
+        btn.textContent = 'Добавить';
       }
     }
 
     async function deleteDashboardLead(id) {
-      if (!confirm('Вы действительно хотите удалить этот лид?')) return;
+      if (!confirm('Удалить эту компанию из базы?')) return;
       try {
         const res = await fetch(`${API}/api/leads/${id}`, { method: 'DELETE' });
         if (res.ok) {
-          showToast('Лид успешно удален', 'info');
+          showToast('Успешно удалено', 'info');
           if (selectedLead && selectedLead.id === id) selectedLead = null;
           loadDashboardLeads();
           selectDashboardLead(null);
@@ -1165,7 +1054,7 @@
       try {
         const res = await fetch(`${API}/api/leads/${selectedLead.id}/reset`, { method: 'PATCH' });
         if (res.ok) {
-          showToast('Статус сброшен в PENDING', 'info');
+          showToast('Статус сброшен в очередь', 'info');
           loadDashboardLeads();
           setTimeout(loadDashboardLeads, 1500);
         }
@@ -1178,35 +1067,34 @@
       const sub = document.getElementById('dash-detail-subject').textContent;
       const body = document.getElementById('dash-detail-body').textContent;
       navigator.clipboard.writeText(`Тема: ${sub}\n\n${body}`).then(() => {
-        showToast('Скопировано в буфер!', 'success');
+        showToast('Скопировано!', 'success');
       });
     }
 
     function sendDetailMock() {
       if (!selectedLead) return;
-      const dest = selectedLead.contact_email || 'клиента (email не указан)';
-      showToast(`📤 Симуляция отправки письма на ${dest} завершена!`, 'success');
+      const dest = selectedLead.contact_email || '(email не указан)';
+      showToast(`Симуляция отправки письма на ${dest} завершена!`, 'success');
     }
 
     async function triggerOutreach() {
       try {
         const res = await fetch(`${API}/api/leads/trigger-enrichment`, { method: 'POST' });
         if (res.ok) {
-          showToast('Агент успешно запущен!', 'success');
+          showToast('Фоновый процесс запущен!', 'success');
           loadDashboardLeads();
           setTimeout(loadDashboardLeads, 3000);
           setTimeout(loadDashboardLeads, 10000);
           setTimeout(loadDashboardLeads, 20000);
         }
       } catch (e) {
-        showToast('Ошибка запуска агента', 'error');
+        showToast('Не удалось запустить процесс', 'error');
       }
     }
 
-    // ── PROMPT STUDIO & SETTINGS ──
+    // ── SETTINGS AND CONFIGS ──
     async function loadConfigData() {
       try {
-        // Loading custom prompt text
         const res = await fetch(`${API}/api/settings`);
         if (res.ok) {
           const settingsData = await res.json();
@@ -1215,7 +1103,6 @@
           document.getElementById('settings-smtp-port').value = settingsData.smtp_port || '';
           document.getElementById('settings-smtp-user').value = settingsData.smtp_user || '';
           
-          // Get the default prompt template from backend config or use mock default
           document.getElementById('prompt-content').value = `Ты — гениальный B2B-директор по продажам. Твоя задача — написать холодное коммерческое предложение для компании на основе информации с её сайта.
 
 ИНФОРМАЦИЯ С САЙТА КОМПАНИИ:
@@ -1242,7 +1129,7 @@
     }
 
     async function savePromptSettings() {
-      showToast('Настройки промпта успешно обновлены!', 'success');
+      showToast('Промпт сохранен успешно!', 'success');
     }
 
     async function saveSmtpSettings() {
@@ -1266,12 +1153,12 @@
         });
 
         if (res.ok) {
-          showToast('Настройки SMTP успешно сохранены!', 'success');
+          showToast('Настройки SMTP сохранены!', 'success');
         } else {
           showToast('Не удалось сохранить настройки', 'error');
         }
       } catch (e) {
-        showToast('Ошибка сети', 'error');
+        showToast('Ошибка подключения', 'error');
       }
     }
 
@@ -1290,12 +1177,12 @@
         });
 
         if (res.ok) {
-          showToast('Настройки Telegram успешно сохранены!', 'success');
+          showToast('Настройки Telegram сохранены!', 'success');
         } else {
           showToast('Не удалось сохранить настройки', 'error');
         }
       } catch (e) {
-        showToast('Ошибка сети', 'error');
+        showToast('Ошибка подключения', 'error');
       }
     }
 
